@@ -4,7 +4,7 @@ import { MapPin, Camera, Star, Users, Clock, ArrowRight, Mountain, Compass, Glob
 import InteractiveMapSection from '@/components/destination/interactive-map-section';
 
 const TravelDestinationPage = () => {
-  const [selectedDestination, setSelectedDestination] = useState('nepal');
+  const [selectedDestination, setSelectedDestination] = useState<string>('nepal');
   const [mapInstance, setMapInstance] = useState(null);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const mapRef = useRef(null);
