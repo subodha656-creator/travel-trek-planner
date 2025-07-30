@@ -31,8 +31,7 @@ export async function submitFullTrip(formData: FormData) {
     destination_coordinates: `(${lng},${lat})`,
   }
 
-  // Validation
-  if (!destination || !tripData.title || !tripData.start_date || !tripData.end_date || !lat || !lng) {
+  if (!destination || !tripData.title || !tripData.start_date || !tripData.end_date || !lat || !lng || !tripData?.description) {
     throw new Error("Some fields (*) are required")
   }
 

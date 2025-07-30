@@ -8,6 +8,8 @@ export async function submitItinerary(prevState: any , formData: FormData){
   const supabase = await createClient();
      const destination = formData.get("destination") as string
   const date = formData.get("date") as string
+  const lat = formData.get("latitude");
+  const lon = formData.get("longitude");
  const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -29,7 +31,7 @@ export async function submitItinerary(prevState: any , formData: FormData){
   .select('*', { count: 'exact', head: true })
 
   if(count && count>0){
-    throw Error("First Trip already exists")
+    throw Error("You have not completed on going trips!!")
   }
 
   const tripData = {
@@ -39,7 +41,7 @@ export async function submitItinerary(prevState: any , formData: FormData){
     end_date: date,
     destination: destination?.trim(),
     is_archived: false,
-    // destination_coordinates: `(${data.longitude},${data.latitude})`,
+    destination_coordinates: `(${lon},${lat})`,
   }
 
   const { data: trip, error } = await supabase

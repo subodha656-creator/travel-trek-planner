@@ -94,8 +94,7 @@ const TravelPlanner = () => {
       await submitFullTrip(formData);
       toast.success("Trip created successfully!");
       setIsCreating(false);
-      const { trips } = await getTripsData();
-      setAllTrips(trips || []);
+      loadTrips();
       setLoading(false);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "An error occurred");

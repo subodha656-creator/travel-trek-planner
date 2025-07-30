@@ -53,7 +53,7 @@ const CreateTripForm = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Trip Title
+                Trip Title *
               </label>
               <Input
                 type="text"
@@ -66,7 +66,7 @@ const CreateTripForm = ({
 
             <div className="relative">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Destination
+                Destination *
               </label>
               <Input
                 type="text"
@@ -82,7 +82,7 @@ const CreateTripForm = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Start Date
+                Start Date *
               </label>
               <Input
                 type="date"
@@ -94,7 +94,7 @@ const CreateTripForm = ({
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                End Date
+                End Date *
               </label>
               <Input
                 type="date"
@@ -107,7 +107,7 @@ const CreateTripForm = ({
 
           <div className="relative">
             <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Destination
+              Destination   
             </label>
             <Input
               type="text"
@@ -131,7 +131,7 @@ const CreateTripForm = ({
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Select Location on Map
+                Select Location on Map *
             </label>
             <div className="h-96 w-full rounded-lg overflow-hidden border">
                 
@@ -159,7 +159,7 @@ const CreateTripForm = ({
 
           <div>
             <label className="block text-sm font-semibold text-gray-700">
-              Upload Trip Image (Optional)
+              Upload Trip Image *
             </label>
             <Input
               type="file"
@@ -171,7 +171,7 @@ const CreateTripForm = ({
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Notes
+              Notes *
             </label>
             <textarea
               name="notes"

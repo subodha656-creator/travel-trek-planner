@@ -23,8 +23,7 @@ const initialState = {
 
 const Hero = () => {
   const [selectedDate, setSelectedDate] = useState("");
-  const [selectedPassengers, setSelectedPassengers] =
-    useState("Select Passengers");
+
   const [showPassengerDropdown, setShowPassengerDropdown] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showDestinations, setShowDestinations] = useState(false);
@@ -104,7 +103,6 @@ const Hero = () => {
           action={formAction}
           className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end"
         >
-          {/* Date Selection */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               Where to?
@@ -147,7 +145,9 @@ const Hero = () => {
               />
             </div>
           </div>
-              <input type="hidden" name="" />
+              <input type="hidden" name="latitude" value={latitude} />
+              <input type="hidden" name="longitude" value={longitude} />
+
           <div>
             <Button isLoading={isPending} className="w-full bg-travel-primary hover:bg-travel-primary-light text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl">
               Create Itinerary
