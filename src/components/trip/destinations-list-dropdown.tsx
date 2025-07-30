@@ -9,6 +9,7 @@
     category: string;
     latitude: number;
     longitude: number;
+    address: string;
     };
 
     interface DestinationDropdownProps {
@@ -25,8 +26,8 @@
     searchQuery,
     setSearchQuery,
     setShowDestinations,
-    setLatitude = () => void 0,
-    setLongitude = () => void 0,
+    setLatitude,
+    setLongitude,
     }) => {
         if (!showDestinations) return [];
 
@@ -74,7 +75,7 @@
                     {destination.name}
                 </div>
                 <div className="text-sm text-gray-500">
-                    {destination.category} • {destination.region}
+                    {"Trip Data"} • {destination.address}
                 </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-blue-600 opacity-0 group-hover:opacity-100 transition-all" />

@@ -11,7 +11,7 @@ export type User = {
   id: string
   name: string
   email: string
-  avatar?: string
+  avatar_url?: string
   isOnline?: boolean
 }
 
@@ -47,8 +47,10 @@ const ShareTripPopup = ({
   const [shareLink, setShareLink] = useState('')
   const [isGeneratingLink, setIsGeneratingLink] = useState(false)
   const [copiedLink, setCopiedLink] = useState(false)
-  const [selectedRole, setSelectedRole] = useState<'editor' | 'viewer'>('viewer')
+  const [selectedRole, setSelectedRole] = useState<'viewer'>('viewer')
   const searchInputRef = useRef<HTMLInputElement>(null)
+
+  console.log(sharedUsers)
 
   useEffect(() => {
     const debounceTimer = setTimeout(async () => {
@@ -90,29 +92,9 @@ const ShareTripPopup = ({
     }
   }
 
-//   const handleGenerateShareLink = async () => {
-//     setIsGeneratingLink(true)
-//     try {
-//       const link = await onGenerateShareLink()
-//       setShareLink(link)
-//       toast.success('Share link generated!')
-//     } catch (error) {
-//       toast.error('Failed to generate share link')
-//     } finally {
-//       setIsGeneratingLink(false)
-//     }
-//   }
 
-  const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(shareLink)
-      setCopiedLink(true)
-      toast.success('Link copied to clipboard!')
-      setTimeout(() => setCopiedLink(false), 2000)
-    } catch (error) {
-      toast.error('Failed to copy link')
-    }
-  }
+
+
 
   const getRoleIcon = (role: string) => {
     switch (role) {
@@ -164,7 +146,6 @@ const ShareTripPopup = ({
         </div>
 
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
-          {/* Search Section */}
           <div className="mb-6">
             <div className="flex gap-2 mb-4">
               <div className="relative flex-1">
@@ -180,15 +161,13 @@ const ShareTripPopup = ({
               </div>
               <select
                 value={selectedRole}
-                onChange={(e) => setSelectedRole(e.target.value as 'editor' | 'viewer')}
+                onChange={(e) => setSelectedRole(e.target.value as 'viewer')}
                 className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="viewer">Viewer</option>
-                <option value="editor">Editor</option>
               </select>
             </div>
 
-            {/* Search Results */}
             {isSearching && (
               <div className="text-center py-4">
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
@@ -205,9 +184,9 @@ const ShareTripPopup = ({
                   >
                     <div className="flex items-center gap-3">
                       <div className="relative">
-                        {user.avatar ? (
+                        {user.avatar_url ? (
                           <img
-                            src={user.avatar}
+                            src={user.avatar_url}
                             alt={user.name}
                             className="w-8 h-8 rounded-full object-cover"
                           />
@@ -245,7 +224,6 @@ const ShareTripPopup = ({
             )}
           </div>
 
-          {/* Share Link Section */}
          
 
           <div>
@@ -258,9 +236,9 @@ const ShareTripPopup = ({
               <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg border border-yellow-200">
                 <div className="flex items-center gap-3">
                   <div className="relative">
-                    {currentUser?.avatar ? (
+                    {currentUser?.avatar_url ? (
                       <img
-                        src={currentUser?.avatar}
+                        src={currentUser?.avatar_url}
                         alt={currentUser?.name}
                         className="w-8 h-8 rounded-full object-cover"
                       />
@@ -285,9 +263,9 @@ const ShareTripPopup = ({
                 <div key={user.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                   <div className="flex items-center gap-3">
                     <div className="relative">
-                      {user?.avatar ? (
+                      {user?.avatar_url ? (
                         <img
-                          src={user?.avatar}
+                          src={user?.avatar_url}
                           alt={user?.name}
                           className="w-8 h-8 rounded-full object-cover"
                         />
@@ -306,24 +284,7 @@ const ShareTripPopup = ({
                       <p className="text-xs text-gray-400">Added {user?.addedAt?.toLocaleDateString()}</p>
                     </div>
                   </div>
-                  {/* <div className="flex items-center gap-2">
-                    <select
-                      value={user.role}
-                      onChange={(e) => onUpdateRole(user.id, e.target.value as 'editor' | 'viewer')}
-                      className={`px-2 py-1 rounded text-xs font-medium border ${getRoleColor(user.role)} bg-transparent`}
-                    >
-                      <option value="viewer">Viewer</option>
-                      <option value="editor">Editor</option>
-                    </select>
-                    <Button
-                      onClick={() => onRemoveUser(user.id)}
-                      variant="ghost"
-                      size="sm"
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </div> */}
+                  
                 </div>
               ))}
             </div>

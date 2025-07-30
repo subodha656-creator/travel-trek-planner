@@ -39,6 +39,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import supabase from "@/lib/supabase/client";
+import ProfileModal from "@/components/trip/profile-modal";
 
 const TravelPlanner = () => {
   const [currentView, setCurrentView] = useState("trips");
@@ -49,14 +51,26 @@ const TravelPlanner = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterBy, setFilterBy] = useState("all");
-  const [user, setUser] = useState({
-    name: "John Doe",
-    email: "john@example.com",
-  });
+  const [user, setUser] = useState<Record<string,any>>([]);
   const [showDestinations, setShowDestinations] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
   const [viewType, setViewType] = useState<"grid" | "list">("grid");
+  const [profileModal, setProfileModal] = useState(false);
+
+    const [allTrips, setAllTrips] = useState<Trip[]>([]);
+  const [allCollaboratedTrips, setAllCollaboratedTrips] = useState<Trip[]>([]);
+
+  const loadTrips = async () => {
+      try {
+        const { trips } = await getTripsData();
+        
+        setAllTrips([...trips]);
+      } catch (error: any) {
+        toast.error(error.message || "Failed to fetch trips");
+        setAllTrips([]);
+      }
+    };
 
   const [newTrip, setNewTrip] = useState({
     title: "",
@@ -91,8 +105,12 @@ const TravelPlanner = () => {
 
   const handleDeleteTrip = async (id: number) => {
     try {
-      await deleteTrip(id);
+       const {error} = await supabase
+    .from('trips')
+    .delete()
+    .eq('id', id);
       toast.success("Trip deleted successfully!");
+        loadTrips()
       router.refresh();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "An error occurred");
@@ -104,21 +122,25 @@ const TravelPlanner = () => {
     setCurrentView("edit");
   };
 
-  const [allTrips, setAllTrips] = useState<Trip[]>([]);
+  
+
 
   useEffect(() => {
-    const loadTrips = async () => {
-      try {
-        const { trips } = await getTripsData();
-        setAllTrips(trips || []);
-      } catch (error: any) {
-        toast.error(error.message || "Failed to fetch trips");
-        setAllTrips([]);
-      }
-    };
+    
 
     loadTrips();
   }, []);
+
+    useEffect(() => {
+      const getcurrentUser = async () => {
+        const response = await fetch("/api/users/get-user", {
+          method: "GET",
+        });
+        const {  currentUser } = await response.json();
+        setUser(currentUser);
+      };
+      getcurrentUser();
+    }, []);
 
   useEffect(() => {
     const filtered = allTrips.filter((trip) => {
@@ -128,9 +150,12 @@ const TravelPlanner = () => {
       const matchesFilter =
         filterBy === "all" ||
         (filterBy === "upcoming" && new Date(trip.start_date) > new Date()) ||
+        (filterBy === "collaborated" && trip.isCollaborated) ||
         (filterBy === "past" && new Date(trip.end_date) < new Date());
       return matchesSearch && matchesFilter;
     });
+
+
 
     setTrips(filtered);
   }, [allTrips, searchTerm, filterBy]);
@@ -142,12 +167,10 @@ const TravelPlanner = () => {
     router.push("/login");
   };
 
-  // Fixed client-side upload function
 const handlePhotoUpload = async (files: File[], tripId: string): Promise<TripPhoto[]> => {
   const uploadedPhotos: TripPhoto[] = [];
   
   try {
-    // Upload each file separately
     for (const file of files) {
       const formData = new FormData();
       formData.append("trip_id", tripId);
@@ -161,7 +184,6 @@ const handlePhotoUpload = async (files: File[], tripId: string): Promise<TripPho
       const result = await response.json();
       
       if (response.ok && result.success) {
-        // Convert API response to TripPhoto format
         const tripPhoto: TripPhoto = {
           id: result.id || `uploaded-${Date.now()}-${Math.random()}`,
           url: result.image_url,
@@ -203,6 +225,10 @@ const handlePhotoUpload = async (files: File[], tripId: string): Promise<TripPho
     }
   };
   return (
+    <>
+    {
+      profileModal && <ProfileModal isOpen={profileModal} onClose={() => setProfileModal(false)} user={user} />
+    }
     <div className="min-h-screen bg-gray-50 mt-8 mb-6 rounded-4xl">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {currentView === "trips" && !isCreating && (
@@ -224,6 +250,13 @@ const handlePhotoUpload = async (files: File[], tripId: string): Promise<TripPho
                 >
                   <Plus className="w-5 h-5" />
                   Create New Trip
+                </Button>
+
+                <Button
+                  onClick={() => setProfileModal(true)}
+                  className="bg-gradient-to-r from-travel-primary to-travel-primary-light text-white px-6 py-3 rounded-xl font-semibold  transition-all transform hover:scale-105 flex items-center gap-2 shadow-lg"
+                >
+                  Profile
                 </Button>
 
                 <Button
@@ -251,6 +284,7 @@ const handlePhotoUpload = async (files: File[], tripId: string): Promise<TripPho
                     <SelectItem value="all">All Trips</SelectItem>
                     <SelectItem value="upcoming">Upcoming</SelectItem>
                     <SelectItem value="past">Past Trips</SelectItem>
+                    <SelectItem value="collaborated">Collaborated</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -339,6 +373,7 @@ const handlePhotoUpload = async (files: File[], tripId: string): Promise<TripPho
         )}
       </main>
     </div>
+    </>
   );
 };
 

@@ -16,4 +16,8 @@ export interface Trip {
       location: string;
     }>;
   }>;
+  latitude: number;
+  longitude: number;
+  destination_coordinates: string;
+  isCollaborated:boolean;
 }

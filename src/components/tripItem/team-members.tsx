@@ -7,7 +7,8 @@ import { useTripContext } from '@/context/trip-context'
 type Collaborator = {
   id: number
   name: string
-  avatar: string
+  full_name: string
+  avatar_url: string
   color: string
 }
 
@@ -30,8 +31,8 @@ const TeamMembersPanel = ({
           >
             <div className="relative">
               <img
-                src={collaborator.avatar}
-                alt={collaborator.name}
+                src={collaborator.avatar_url}
+                alt={collaborator.full_name}
                 className="w-8 h-8 rounded-full object-cover ring-2 ring-white/50 shadow-lg"
               />
               <div
@@ -44,16 +45,9 @@ const TeamMembersPanel = ({
             </div>
             <div className="flex-1">
               <div className="text-sm font-medium text-gray-900 drop-shadow-sm">
-                {collaborator.name}
+                {collaborator.full_name}
               </div>
-              <div className="text-xs text-gray-600 drop-shadow-sm">
-                {
-                 mapLocations && mapLocations.filter(
-                    (l) => l.collaborator === collaborator.name
-                  ).length
-                }{' '}
-                activities
-              </div>
+            
             </div>
           </div>
         ))}

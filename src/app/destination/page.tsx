@@ -2,94 +2,123 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MapPin, Camera, Star, Users, Clock, ArrowRight, Mountain, Compass, Globe } from 'lucide-react';
 import InteractiveMapSection from '@/components/destination/interactive-map-section';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 const TravelDestinationPage = () => {
-  const [selectedDestination, setSelectedDestination] = useState<string>('nepal');
+  const [selectedDestination, setSelectedDestination] = useState<Record<string,any>>({});
+  const [currentPhotos, setCurrentPhotos] = useState<any[]>([]);
   const [mapInstance, setMapInstance] = useState(null);
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<any>(null);
+  const [destinations, setDestinations] = useState<Record<string,any>[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const mapRef = useRef(null);
+  const router = useRouter()
 
-  const destinations = {
-    nepal: {
-      name: 'Nepal Himalayas',
-      coordinates: [28.3949, 84.1240],
-      description: 'Experience the majestic Himalayas with breathtaking mountain views and rich cultural heritage.',
-      difficulty: 'Challenging',
-      duration: '14-21 days',
-      bestTime: 'Oct-Dec, Mar-May',
-      rating: 4.9,
-      reviews: 1247,
-      photos: [
-        { id: 1, url: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800', title: 'Everest Base Camp' },
-        { id: 2, url: 'https://images.unsplash.com/photo-1605538883669-825200433431?w=800', title: 'Annapurna Circuit' },
-        { id: 3, url: 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=800', title: 'Kathmandu Valley' },
-        { id: 4, url: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?w=800', title: 'Sherpa Village' },
-        { id: 5, url: 'https://images.unsplash.com/photo-1605026110219-cfb74545047b?w=800', title: 'Prayer Flags' },
-        { id: 6, url: 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=800', title: 'Mountain Sunrise' }
-      ]
-    },
-    patagonia: {
-      name: 'Patagonia',
-      coordinates: [-50.0343, -73.0115],
-      description: 'Discover the wild landscapes of Patagonia with glaciers, peaks, and pristine wilderness.',
-      difficulty: 'Moderate to Hard',
-      duration: '10-16 days',
-      bestTime: 'Nov-Mar',
-      rating: 4.8,
-      reviews: 892,
-      photos: [
-        { id: 1, url: 'https://images.unsplash.com/photo-1552832230-592ce5042d9d?w=800', title: 'Torres del Paine' },
-        { id: 2, url: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?w=800', title: 'Glacier Hiking' },
-        { id: 3, url: 'https://images.unsplash.com/photo-1586276393630-c9cf28c48c88?w=800', title: 'Fitz Roy' },
-        { id: 4, url: 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=800', title: 'Perito Moreno' },
-        { id: 5, url: 'https://images.unsplash.com/photo-1605538883669-825200433431?w=800', title: 'Wildlife' },
-        { id: 6, url: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800', title: 'Camping' }
-      ]
-    },
-    kilimanjaro: {
-      name: 'Mount Kilimanjaro',
-      coordinates: [-3.0674, 37.3556],
-      description: 'Conquer Africa\'s highest peak through diverse ecosystems from rainforest to arctic summit.',
-      difficulty: 'Challenging',
-      duration: '6-9 days',
-      bestTime: 'Jun-Oct, Dec-Mar',
-      rating: 4.7,
-      reviews: 2156,
-      photos: [
-        { id: 1, url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800', title: 'Uhuru Peak' },
-        { id: 2, url: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?w=800', title: 'Machame Route' },
-        { id: 3, url: 'https://images.unsplash.com/photo-1586276393630-c9cf28c48c88?w=800', title: 'Barranco Wall' },
-        { id: 4, url: 'https://images.unsplash.com/photo-1605538883669-825200433431?w=800', title: 'Safari Views' },
-        { id: 5, url: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800', title: 'Sunrise Summit' },
-        { id: 6, url: 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=800', title: 'Glaciers' }
-      ]
-    },
-    alps: {
-      name: 'European Alps',
-      coordinates: [46.5197, 10.4017],
-      description: 'Trek through iconic Alpine landscapes with charming villages and spectacular mountain vistas.',
-      difficulty: 'Easy to Moderate',
-      duration: '7-14 days',
-      bestTime: 'Jun-Sep',
-      rating: 4.6,
-      reviews: 1834,
-      photos: [
-        { id: 1, url: 'https://images.unsplash.com/photo-1551524164-6cf1ac833fb5?w=800', title: 'Matterhorn' },
-        { id: 2, url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800', title: 'Mont Blanc' },
-        { id: 3, url: 'https://images.unsplash.com/photo-1586276393630-c9cf28c48c88?w=800', title: 'Swiss Villages' },
-        { id: 4, url: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?w=800', title: 'Alpine Lakes' },
-        { id: 5, url: 'https://images.unsplash.com/photo-1605538883669-825200433431?w=800', title: 'Mountain Huts' },
-        { id: 6, url: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800', title: 'Wildflowers' }
-      ]
-    }
-  };
+  useEffect(() => {
+    const fetchDestinations = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        
+        const response = await fetch("/api/destination", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ search: 'kathmandu' }),
+        });
 
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
+        const data = await response.json();
+        
+        if (data?.filteredDestinations && Array.isArray(data.filteredDestinations)) {
+          setDestinations(data.filteredDestinations.slice(0, 5));
+          if (data.filteredDestinations.length > 0) {
+            setSelectedDestination(data.filteredDestinations[0]);
+          }
+        } else {
+          setDestinations([]);
+        }
+      } catch (error) {
+        console.error('Error fetching destinations:', error);
+        setError('Failed to load destinations');
+        setDestinations([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  const currentDestination = destinations[selectedDestination];
+    fetchDestinations();
+  }, []);
+
+  useEffect(() => {
+    const fetchDestinationPhotos = async () => {
+      if (!selectedDestination?.trip_id) return;
+      try {
+        const response = await fetch('/api/get-destination-with-photo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ trip_id: selectedDestination.trip_id }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        if (data?.photos && Array.isArray(data.photos)) {
+          setCurrentPhotos(data.photos);
+        } else {
+          setCurrentPhotos([]);
+        }
+      } catch (error) {
+        console.error('Error fetching destination photos:', error);
+        setCurrentPhotos([]);
+      }
+    };
+
+    fetchDestinationPhotos();
+  }, [selectedDestination?.trip_id]);
+
+  const currentDestination = selectedDestination;
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-travel-primary mx-auto mb-4"></div>
+          <p className="text-xl text-gray-600">Loading destinations...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-xl text-red-600 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-6 py-2 bg-travel-primary text-white rounded-lg hover:bg-travel-primary-dark"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br rounded-4xl ">
+    <div className="min-h-screen bg-gradient-to-br rounded-4xl">
       <div className="relative h-screen flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 rounded-4xl bg-cover bg-center bg-fixed"
@@ -112,19 +141,21 @@ const TravelDestinationPage = () => {
             Discover breathtaking trekking destinations around the world. From the mighty Himalayas to the pristine wilderness of Patagonia.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            {Object.entries(destinations).map(([key, dest]) => (
+            {destinations && destinations.length > 0 ? destinations.map((dest: Record<string,any>, index) => (
               <button
-                key={key}
-                onClick={() => setSelectedDestination(key)}
+                key={dest?.trip_id || index}
+                onClick={() => setSelectedDestination(dest)}
                 className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 ${
-                  selectedDestination === key
+                  selectedDestination?.trip_id === dest?.trip_id
                     ? 'bg-gradient-to-r from-travel-primary to-travel-primary-light text-white shadow-lg'
                     : 'bg-travel-secondary bg-opacity-20 backdrop-blur-md text-white hover:bg-opacity-30'
                 }`}
               >
-                {dest.name}
+                {dest?.name || 'Unknown Destination'}
               </button>
-            ))}
+            )) : (
+              <p className="text-white">No destinations available</p>
+            )}
           </div>
         </div>
       </div>
@@ -134,17 +165,22 @@ const TravelDestinationPage = () => {
           <div className="lg:col-span-2">
             <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl p-8 border border-white border-opacity-20 shadow-2xl">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-4xl font-bold text-travel-primary">{currentDestination.name}</h2>
+                <h2 className="text-4xl font-bold text-travel-primary">
+                  {currentDestination?.name || 'Select a Destination'}
+                </h2>
                 <div className="flex items-center space-x-2 text-yellow-400">
                   <Star className="h-6 w-6 fill-current" />
-                  <span className="text-2xl font-bold text-travel-secondary">{currentDestination.rating}</span>
-                  <span className="text-gray-300">({currentDestination.reviews} reviews)</span>
+                  <span className="text-2xl font-bold text-travel-secondary">
+                    {currentDestination?.rating || 'N/A'}
+                  </span>
                 </div>
               </div>
               
-              <p className="text-travel-secondary text-lg mb-8 leading-relaxed">
-                {currentDestination.description}
-              </p>
+              {currentDestination?.description && (
+                <p className="text-travel-secondary text-lg mb-8 leading-relaxed">
+                  {currentDestination.description}
+                </p>
+              )}
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="flex items-center space-x-3">
@@ -153,7 +189,9 @@ const TravelDestinationPage = () => {
                   </div>
                   <div>
                     <p className="text-travel-primary text-sm">Difficulty</p>
-                    <p className="text-travel-secondary font-semibold">{currentDestination.difficulty}</p>
+                    <p className="text-travel-secondary font-semibold">
+                      {currentDestination?.difficulty || 'Moderate'}
+                    </p>
                   </div>
                 </div>
                 
@@ -163,7 +201,9 @@ const TravelDestinationPage = () => {
                   </div>
                   <div>
                     <p className="text-travel-primary text-sm">Duration</p>
-                    <p className="text-travel-secondary font-semibold">{currentDestination.duration}</p>
+                    <p className="text-travel-secondary font-semibold">
+                      {currentDestination?.duration || 'N/A'}
+                    </p>
                   </div>
                 </div>
                 
@@ -173,7 +213,9 @@ const TravelDestinationPage = () => {
                   </div>
                   <div>
                     <p className="text-travel-primary text-sm">Best Time</p>
-                    <p className="text-travel-secondary font-semibold">{currentDestination.bestTime}</p>
+                    <p className="text-travel-secondary font-semibold">
+                      {currentDestination?.bestTime || 'Year Round'}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -197,45 +239,52 @@ const TravelDestinationPage = () => {
               <p className="text-purple-100">Photos Captured</p>
             </div>
             
-            <button className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-4 px-8 rounded-4xl transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center justify-center space-x-2">
-              <span>Book Adventure</span>
+            <Button onClick={() => router.push('/dashboard/trips')} className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-4 px-8 rounded-4xl transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center justify-center space-x-2">
+              <span>Create Trip</span>
               <ArrowRight className="h-5 w-5" />
-            </button>
+            </Button>
           </div>
         </div>
 
-
-        <InteractiveMapSection
-    selectedDestination={selectedDestination}
-    setSelectedDestination={setSelectedDestination}
-  />
+        <InteractiveMapSection />
 
         <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl p-8 border border-white border-opacity-20 shadow-2xl">
           <div className="flex items-center space-x-3 mb-8">
-            <Camera className="h-8 w-8 text-cyan-400" />
-            <h3 className="text-3xl font-bold text-white">Destination Gallery</h3>
+            <Camera className="h-8 w-8 text-travel-primary" />
+            <h3 className="text-3xl font-bold text-black">Destination Gallery</h3>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {currentDestination.photos.map((photo) => (
-              <div 
-                key={photo.id}
-                className="group relative overflow-hidden rounded-2xl cursor-pointer transform transition-all duration-300 hover:scale-105 shadow-xl"
-                onClick={() => setSelectedPhoto(photo)}
-              >
-                <img
-                  src={photo.url}
-                  alt={photo.title}
-                  className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                  <h4 className="text-lg font-bold mb-2">{photo.title}</h4>
-                  <div className="w-12 h-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full" />
+          {currentPhotos && currentPhotos.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {currentPhotos.map((photo: any, index: number) => (
+                <div 
+                  key={photo?.id || index}
+                  className="group relative overflow-hidden rounded-2xl cursor-pointer transform transition-all duration-300 hover:scale-105 shadow-xl"
+                  onClick={() => setSelectedPhoto(photo)}
+                >
+                  <img
+                    src={photo?.image_url || '/placeholder-image.jpg'}
+                    alt={photo?.title || 'Destination photo'}
+                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = '/placeholder-image.jpg';
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                    <h4 className="text-lg font-bold mb-2">{photo?.title || 'Beautiful View'}</h4>
+                    <div className="w-12 h-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full" />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <Camera className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+              <p className="text-white text-lg">No photos available for this destination</p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -246,15 +295,24 @@ const TravelDestinationPage = () => {
         >
           <div className="relative max-w-4xl max-h-full">
             <img
-              src={selectedPhoto.url}
-              alt={selectedPhoto.title}
+              src={selectedPhoto?.image_url || '/placeholder-image.jpg'}
+              alt={selectedPhoto?.title || 'Photo'}
               className="max-w-full max-h-full object-contain rounded-2xl"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = '/placeholder-image.jpg';
+              }}
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-8 rounded-b-2xl">
-              <h3 className="text-2xl font-bold text-white">{selectedPhoto.title}</h3>
+              <h3 className="text-2xl font-bold text-white">
+                {selectedPhoto?.title || 'Beautiful View'}
+              </h3>
             </div>
             <button
-              onClick={() => setSelectedPhoto(null)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedPhoto(null);
+              }}
               className="absolute top-4 right-4 bg-white bg-opacity-20 backdrop-blur-md text-white p-2 rounded-full hover:bg-opacity-30 transition-all duration-200"
             >
               ✕

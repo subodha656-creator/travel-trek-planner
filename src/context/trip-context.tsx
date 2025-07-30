@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { calculateTotalDays } from '@/lib/helpers/trip-total-days';
+import supabase from '@/lib/supabase/client';
 
 export type MapLocation = {
   id: number;
@@ -23,7 +24,8 @@ export type MapLocation = {
 type Collaborator = {
   id: number;
   name: string;
-  avatar: string;
+  avatar_url: string;
+  full_name: string;
   color: string;
 };
 
@@ -67,7 +69,7 @@ export const TripProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
 
   const [refreshTrip, setRefreshTrip] = useState([]);
-
+  const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
   const [selectedTrip, setSelectedTrip] = useState<Trip>({
     id: '',
     title: '',
@@ -98,67 +100,41 @@ export const TripProvider = ({ children }: { children: React.ReactNode }) => {
   const openAddLocationModal = () => setIsAddingLocation(true);
   const closeAddLocationModal = () => setIsAddingLocation(false);
 
-//   const handleAddLocation = async (tripId: string) => {
-//     if (!newLocation.name.trim()) return;
 
-//     const response = await fetch("/api/add-activity", {
-//       method: "POST",
-//       body: JSON.stringify({ ...newLocation, trip_id: tripId }),
-//     });
 
-//     const { error } = await response.json();
-//     if (error) {
-//       toast.error(error.message);
-//       return;
-//     }
 
-//     closeAddLocationModal();
-//     setNewLocation({
-//       name: "",
-//       day: 1,
-//       type: "attraction",
-//       time: "",
-//       notes: "",
-//       date: "",
-//       collaborator: "",
-//     });
+const fetchCollaborators = async () => {
+  const response = await supabase
+    .from('trip_collaborators')
+    .select('*')
+    .eq('trip_id', params.trip_id);
 
-//     // Optional: refresh activities
-//     fetchActivities(tripId);
-//   };
+  if (!response.data) {
+    setCollaborators([]);
+    return;
+  }
 
-  const fetchActivities = async (tripId: string) => {
-    const res = await fetch(`/api/day-schedule?id=${tripId}`);
-    const { result } = await res.json();
-    setActivities(result);
-  };
+  const result = await Promise.all(
+    response.data.map(async (collaborator) => {
+      const { data: user } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', collaborator.user_id)
+        .single();
 
-  const collaborators: Collaborator[] = [
-    {
-      id: 1,
-      name: 'John Doe',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face',
-      color: '#3B82F6',
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b29c?w=32&h=32&fit=crop&crop=face',
-      color: '#10B981',
-    },
-    {
-      id: 3,
-      name: 'Mike Johnson',
-      avatar: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=32&h=32&fit=crop&crop=face',
-      color: '#F59E0B',
-    },
-    {
-      id: 4,
-      name: 'Sarah Wilson',
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face',
-      color: '#EF4444',
-    },
-  ];
+      return {
+        ...collaborator,
+        full_name: user?.full_name,
+        avatar_url: user?.avatar_url,
+      };
+    })
+  );
+
+  setCollaborators(result);
+};
+
+
+ 
 
   const fetchTripData = async () => {
     setLoading(true);
@@ -191,6 +167,7 @@ export const TripProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     fetchTripData();
     refreshActivities();
+    fetchCollaborators();
   }, [refreshTrip]);
 
 
