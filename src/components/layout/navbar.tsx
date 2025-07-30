@@ -45,8 +45,8 @@ const Navbar = ({user}: {user: any}) => {
                 Home
               </Link>
               
-              <Link href="#" className="text-gray-600 hover:text-travel-primary-light px-3 py-2 text-sm font-medium transition-colors">
-                FAQ
+              <Link href="/faq" className="text-gray-600 hover:text-travel-primary-light px-3 py-2 text-sm font-medium transition-colors">
+                Faqs
               </Link>
                {
               user && (
@@ -61,9 +61,7 @@ const Navbar = ({user}: {user: any}) => {
                 </>
               )
             } 
-              {/* <Link href="#" className="text-gray-600 hover:text-travel-primary-light px-3 py-2 text-sm font-medium transition-colors">
-                Coupons and Promos
-              </Link> */}
+         
             </div>
           </div>
 
@@ -102,7 +100,7 @@ const Navbar = ({user}: {user: any}) => {
             {/* <Link href="#" className="text-gray-600 hover:travel-primary-light block px-3 py-2 text-base font-medium">
               Partners
             </Link> */}
-            <Link href="#" className="text-gray-600 hover:travel-primary-light block px-3 py-2 text-base font-medium">
+            <Link href="/faq" className="text-gray-600 hover:travel-primary-light block px-3 py-2 text-base font-medium">
               FAQ
             </Link>
              {
