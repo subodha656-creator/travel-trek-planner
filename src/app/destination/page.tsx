@@ -94,7 +94,7 @@ const TravelDestinationPage = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-travel-primary mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-travel-primary mx-auto mb-4"></div>
           <p className="text-xl text-gray-600">Loading destinations...</p>
         </div>
       </div>
@@ -138,7 +138,7 @@ const TravelDestinationPage = () => {
             <Compass className="h-8 w-8 text-travel-primary" />
           </div>
           <p className="text-xl text-white font-semibold mb-8 leading-relaxed">
-            Discover breathtaking trekking destinations around the world. From the mighty Himalayas to the pristine wilderness of Patagonia.
+            Discover breathtaking trekking destinations around Nepal shared by Users and Trekking Experts.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             {destinations && destinations.length > 0 ? destinations.map((dest: Record<string,any>, index) => (
@@ -165,7 +165,7 @@ const TravelDestinationPage = () => {
           <div className="lg:col-span-2">
             <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl p-8 border border-white border-opacity-20 shadow-2xl">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-4xl font-bold text-travel-primary">
+                <h2 className="md:text-4xl text-lg font-bold text-travel-primary">
                   {currentDestination?.name || 'Select a Destination'}
                 </h2>
                 <div className="flex items-center space-x-2 text-yellow-400">
@@ -176,11 +176,11 @@ const TravelDestinationPage = () => {
                 </div>
               </div>
               
-              {currentDestination?.description && (
+              {/* {currentDestination?.description && (
                 <p className="text-travel-secondary text-lg mb-8 leading-relaxed">
                   {currentDestination.description}
                 </p>
-              )}
+              )} */}
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="flex items-center space-x-3">
@@ -214,7 +214,7 @@ const TravelDestinationPage = () => {
                   <div>
                     <p className="text-travel-primary text-sm">Best Time</p>
                     <p className="text-travel-secondary font-semibold">
-                      {currentDestination?.bestTime || 'Year Round'}
+                      {currentDestination?.bestTime || 'N/A'}
                     </p>
                   </div>
                 </div>

@@ -17,11 +17,9 @@ const InteractiveMapSection = ({
   const [longitude, setLongitude] = useState(85.3240);
   const [isClient, setIsClient] = useState(false);
 
-  // Fix Leaflet default markers
   useEffect(() => {
     setIsClient(true);
     
-    // Fix for default markers
     delete (L.Icon.Default.prototype as any)._getIconUrl;
     L.Icon.Default.mergeOptions({
       iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -64,7 +62,6 @@ const InteractiveMapSection = ({
     shadowSize: [41, 41]
   });
 
-  // Render loading state for SSR
   if (!isClient) {
     return (
       <div className="mb-16">
@@ -72,7 +69,7 @@ const InteractiveMapSection = ({
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <MapPin className="h-8 w-8 text-travel-secondary" />
-              <h3 className="text-3xl font-bold text-travel-primary">Explore Location</h3>
+              <h3 className="lg:text-3xl text-md font-bold text-travel-primary">Explore Location</h3>
             </div>
 
             <div className="w-60 relative">
@@ -113,10 +110,10 @@ const InteractiveMapSection = ({
   return (
     <div className="mb-16">
       <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-4xl p-8 border border-white border-opacity-20 shadow-2xl">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex md:flex-row flex-col items-center justify-between mb-6 space-y-6">
           <div className="flex items-center gap-3">
             <MapPin className="h-8 w-8 text-travel-secondary" />
-            <h3 className="text-3xl font-bold text-travel-primary">Explore Location</h3>
+            <h3 className="md:text-3xl text-md font-bold text-travel-primary">Explore Location</h3>
           </div>
 
           <div className="w-60 relative">
