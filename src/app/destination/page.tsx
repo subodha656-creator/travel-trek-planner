@@ -27,7 +27,7 @@ const TravelDestinationPage = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ search: 'kathmandu' }),
+          body: JSON.stringify({ search: '' }),
         });
 
         if (!response.ok) {

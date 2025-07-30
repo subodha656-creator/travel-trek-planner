@@ -84,7 +84,7 @@ const TripCard = ({
         onClick={handleClick}
         className={`${
           viewType === "grid"
-            ? "group relative backdrop-blur-xl bg-transparent border border-white/30 shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden rounded-4xl before:absolute before:inset-0 before:rounded-4xl before:bg-gradient-to-br before:from-white/30 before:to-white/10 before:-z-10 hover:scale-[1.02] cursor-pointer"
+            ? "group h-[400px] relative backdrop-blur-xl bg-transparent border border-white/30 shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden rounded-4xl before:absolute before:inset-0 before:rounded-4xl before:bg-gradient-to-br before:from-white/30 before:to-white/10 before:-z-10 hover:scale-[1.02] cursor-pointer"
             : "flex flex-col sm:flex-row w-full backdrop-blur-xl bg-transparent border border-white/30 shadow-2xl hover:shadow-3xl overflow-hidden rounded-2xl transition-all duration-300 hover:scale-[1.01] cursor-pointer before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-white/30 before:to-white/10 before:-z-10 relative"
         }`}
       >
@@ -103,12 +103,11 @@ const TripCard = ({
               alt={trip.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           </div>
 
           {viewType === "grid" && (
             <div className="absolute top-4 right-4 flex gap-2 z-20">
-              <Button className="p-2 backdrop-blur-xl bg-white/20 border border-white/30 rounded-full text-white hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110">
+              <Button className="p-2 backdrop-blur-xl bg-white/90 text-black border border-white/30 rounded-full  hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110">
                 <Heart className="w-4 h-4 drop-shadow-sm" />
               </Button>
               <Button
@@ -116,7 +115,7 @@ const TripCard = ({
                   e.stopPropagation();
                   setOpenShareTripPopup(true);
                 }}
-                className="p-2 backdrop-blur-xl bg-white/20 border border-white/30 rounded-full text-white hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110"
+                className="p-2 backdrop-blur-xl bg-white/90 border border-white/30 rounded-full text-black hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110"
               >
                 <Share2 className="w-4 h-4 drop-shadow-sm" />
               </Button>
@@ -192,7 +191,7 @@ const TripCard = ({
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between mb-3 sm:mb-4 gap-2 sm:gap-3">
+          <div className="flex flex-col mt-16 sm:flex-row flex-wrap items-start sm:items-center justify-between mb-3 sm:mb-4 gap-2 sm:gap-3">
             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               <div className="flex items-center gap-2 text-gray-700 backdrop-blur-sm bg-transparent px-3 py-1.5 rounded-lg border border-white/30 shadow-md text-xs sm:text-sm">
                 <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />

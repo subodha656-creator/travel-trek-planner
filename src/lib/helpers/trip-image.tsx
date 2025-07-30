@@ -9,14 +9,14 @@ type SupabasePublicImageProps = {
 const SupabasePublicImage = ({
   path,
   alt = "Image",
-  className = "rounded-lg w-full",
+  className = "rounded-lg w-full h-[60px] object-contain",
 }: SupabasePublicImageProps) => {
   const PROJECT_REF = process.env.NEXT_PUBLIC_PROJECT_ID;
   const BUCKET = "travelplanner"; 
 
   const imageUrl = `https://${PROJECT_REF}.supabase.co/storage/v1/object/public/${BUCKET}/${path}`;
     if(!path){
-        return <Image width={100} height={100} src="/images/no-image.png" alt={alt} className={className} />
+        return <Image width={100} height={60} src="/images/no-image.png" alt={alt} className={className} />
     }
   return <Image width={100} height={100} src={imageUrl} alt={alt} className={className} />;
 };
