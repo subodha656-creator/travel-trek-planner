@@ -120,9 +120,9 @@ const CollaborationPage = () => {
     : requests;
 
   return (
-    <div className="min-h-[50vh] max-w-full bg-gradient-to-br from-blue-50 via-white to-green-50">
-      <div className="relative w-full bg-gradient-to-r to-travel-primary text-white py-20">
-        <div className="absolute inset-0 bg-black/20" />
+    <div className="min-h-[50vh] mt-8 mb-8 rounded-2xl max-w-full bg-gradient-to-br">
+      <div className="relative w-full bg-gradient-to-r rounded-2xl from-travel-primary-light to-travel-primary text-white py-20">
+        <div className="absolute inset-0 bg-black/20 rounded-2xl" />
         <div className="relative max-w-6xl mx-auto px-6 text-center">
           <div className="flex justify-center mb-6">
             <div className="bg-white/20 p-4 rounded-full backdrop-blur-sm">
@@ -138,7 +138,7 @@ const CollaborationPage = () => {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="max-w-full mx-auto px-6 py-12 mt-8 bg-travel-secondary-light/20 rounded-2xl">
         <div className="flex justify-between items-center">
           <div className="flex gap-2 text-sm">
             <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">

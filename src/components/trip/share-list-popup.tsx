@@ -126,20 +126,20 @@ const ShareTripPopup = ({
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+      <div className="relative bg-gradient-to-r bg-white/40  rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden">
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-travel-primary to-travel-primary-light">
           <div className="flex items-center gap-3">
             <Share2 className="w-6 h-6 text-blue-600" />
             <div>
-              <h2 className="text-xl font-semibold text-gray-900">Share Trip</h2>
-              <p className="text-sm text-gray-600 truncate max-w-xs">{tripTitle}</p>
+              <h2 className="text-xl font-semibold text-white">Share Trip</h2>
+              <p className="text-sm text-white truncate max-w-xs">{tripTitle}</p>
             </div>
           </div>
           <Button
             onClick={onClose}
             variant="ghost"
             size="sm"
-            className="hover:bg-white/50"
+            className="hover:bg-white/50 text-white"
           >
             <X className="w-5 h-5" />
           </Button>
@@ -147,9 +147,9 @@ const ShareTripPopup = ({
 
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
           <div className="mb-6">
-            <div className="flex gap-2 mb-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <div className="flex gap-2 mb-4 bg-white/30">
+              <div className="relative flex-1 bg-white/30">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-travel-primary" />
                 <Input
                   ref={searchInputRef}
                   type="text"
@@ -170,8 +170,8 @@ const ShareTripPopup = ({
 
             {isSearching && (
               <div className="text-center py-4">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
-                <p className="text-sm text-gray-500 mt-2">Searching users...</p>
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-travel-primary mx-auto"></div>
+                <p className="text-sm text-gray-900 mt-2">Searching users...</p>
               </div>
             )}
 

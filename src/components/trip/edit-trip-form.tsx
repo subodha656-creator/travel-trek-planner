@@ -26,6 +26,7 @@ import supabase from "@/lib/supabase/client";
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
 import { parseCoordinates } from "@/lib/helpers/parse-coordinates";
+import { Input } from "../ui/input";
 
 export type TripPhoto = {
   id: string;
@@ -368,11 +369,11 @@ const EditTripView = ({
                     onDrop={handleDrop}
                     className={`border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${
                       isDragOver
-                        ? "border-blue-500 bg-blue-50"
+                        ? "border-travel-prtext-travel-primary bg-blue-50"
                         : "border-gray-300 hover:border-gray-400"
                     }`}
                   >
-                    <input
+                    <Input
                       ref={fileInputRef}
                       type="file"
                       multiple
@@ -383,7 +384,7 @@ const EditTripView = ({
 
                     <ImageIcon
                       className={`w-12 h-12 mx-auto mb-4 ${
-                        isDragOver ? "text-blue-500" : "text-gray-400"
+                        isDragOver ? "text-travel-primary" : "text-gray-400"
                       }`}
                     />
 
@@ -400,7 +401,7 @@ const EditTripView = ({
                     <Button
                       onClick={() => fileInputRef.current?.click()}
                       disabled={isUploading}
-                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                      className="bg-travel-primary hover:bg-travel-primary-light text-white"
                     >
                       {isUploading ? (
                         <>
@@ -465,10 +466,7 @@ const EditTripView = ({
                             </div>
                           )}
 
-                          {/* <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2">
-                          <p className="text-white text-xs truncate">{photo.name}</p>
-                          <p className="text-white/80 text-xs">{formatFileSize(photo.size)}</p>
-                        </div> */}
+                          
                         </div>
                       ))}
                     </div>
@@ -488,20 +486,20 @@ const EditTripView = ({
                   </div>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
-                      <Calendar className="w-4 h-4 text-blue-600" />
+                      <Calendar className="w-4 h-4 text-travel-primary" />
                       <span className="text-sm text-gray-600">
                         {new Date(selectedTrip.start_date).toLocaleDateString()}{" "}
                         - {new Date(selectedTrip.end_date).toLocaleDateString()}
                       </span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Clock className="w-4 h-4 text-blue-600" />
+                      <Clock className="w-4 h-4 text-travel-primary-light" />
                       <span className="text-sm text-gray-600">
                         {durationInDays} days
                       </span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Camera className="w-4 h-4 text-blue-600" />
+                      <Camera className="w-4 h-4 text-travel-primary-light" />
                       <span className="text-sm text-gray-600">
                         {photos.length} photos
                       </span>
@@ -509,7 +507,7 @@ const EditTripView = ({
                   </div>
                 </div>
 
-                <div className="bg-green-50 rounded-xl p-6">
+                <div className="bg-travel-tertiary/40 rounded-xl p-6">
                   <h4 className="font-semibold text-gray-900 mb-4">
                     Quick Actions
                   </h4>
@@ -549,7 +547,7 @@ const EditTripView = ({
 
                 <Button
                   onClick={() => setCurrentView("trips")}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
+                  className="w-full bg-gradient-to-r from-travel-primary to-travel-primary-light text-white px-4 py-3 rounded-xl font-semibold hover:from-travel-primary-light hover:to-travel-primary transition-all"
                 >
                   Back to Trips
                 </Button>

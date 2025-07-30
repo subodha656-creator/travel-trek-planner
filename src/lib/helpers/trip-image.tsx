@@ -12,7 +12,7 @@ const SupabasePublicImage = ({
   className = "rounded-lg w-full",
 }: SupabasePublicImageProps) => {
   const PROJECT_REF = process.env.NEXT_PUBLIC_PROJECT_ID;
-  const BUCKET = "travelplanner"; // ⬅️ replace with your actual bucket name
+  const BUCKET = "travelplanner"; 
 
   const imageUrl = `https://${PROJECT_REF}.supabase.co/storage/v1/object/public/${BUCKET}/${path}`;
     if(!path){
