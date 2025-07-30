@@ -1,236 +1,187 @@
-Travel Trek 🌍
-==============
+# TravelTrek 🌍✈️
 
-A comprehensive travel planning application built with Next.js 14 and Supabase that allows users to create, manage, and collaborate on travel itineraries with interactive maps and real-time collaboration features.
+Welcome to **TravelTrek**, a modern web application built with **Next.js** and **Supabase** that helps you plan, collaborate, and share your travel itineraries seamlessly. Whether you're looking to map out your next adventure or plan a trip with friends, TravelTrek has got you covered! 🗺️💼
 
-✨ Features
-----------
+This project allows users to create detailed trips, manage activities, share itineraries, and even upload destination photos—all in one place. 
 
-*   **Trip Planning**: Create detailed travel itineraries with multiple destinations
-    
-*   **Interactive Maps**: Visualize your trip routes and locations using dynamic maps
-    
-*   **Day-by-Day Scheduling**: Organize activities by specific days and times
-    
-*   **Photo Management**: Upload and manage travel photos with cloud storage
-    
-*   **Real-time Collaboration**: Share trips and collaborate with other travelers
-    
-*   **User Profiles**: Manage personal profiles with avatar uploads
-    
-*   **Destination Discovery**: Explore and select from curated travel destinations
-    
-*   **Responsive Design**: Fully responsive interface for all devices
-    
+## 🚀 Features
 
-🚀 Tech Stack
--------------
+- **Trip Management:** Easily create, update, and delete trips. 🗂️
+- **Activity Management:** Add, remove, and reorder activities in your trip. 🎯
+- **Collaborative Planning:** Invite friends to collaborate on trips and share your itineraries. 👥
+- **Photo Uploads:** Share photos of your travel destinations and activities. 📸
+- **Interactive Maps:** View your destinations on an interactive map. 🗺️
+- **User Authentication:** Secure login and signup functionality with Supabase. 🔐
 
-*   **Frontend**: Next.js 14 (App Router), React, TypeScript, Tailwind CSS
-    
-*   **Backend**: Supabase (Database, Authentication, Storage, Real-time)
-    
-*   **Maps**: Interactive mapping functionality
-    
-*   **UI Components**: Custom UI components with shadcn/ui
-    
-*   **State Management**: React Context API
-    
-*   **Authentication**: Supabase Auth
-    
+## 🛠️ Tech Stack
 
-📁 Project Structure
---------------------
+- **Next.js**: A React framework for building fast, user-friendly applications.
+- **Supabase**: An open-source backend-as-a-service that powers the database, authentication, and storage.
+- **TypeScript**: For better code quality and developer experience.
+- **Tailwind CSS** (optional): For styling your app (if applicable).
+- **Mapbox** (optional): For rendering interactive maps.
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   src/  ├── app/                          # Next.js App Router  │   ├── actions/                  # Server Actions  │   │   ├── create-activity-action.ts  │   │   ├── create-full-trip-action.ts  │   │   ├── create-itinerary-action.ts  │   │   ├── delete-activity-action.ts  │   │   ├── delete-trip-action.ts  │   │   ├── get-all-trips-action.ts  │   │   ├── share-trip.ts  │   │   └── update-activity-order-action.ts  │   ├── api/                      # API Routes  │   │   ├── collab-requests/      # Collaboration management  │   │   ├── day-schedule/         # Daily itinerary management  │   │   ├── delete-photo/         # Photo deletion  │   │   ├── destination/          # Destination data  │   │   ├── get-destination-with-photo/  │   │   ├── get-uploaded-photos/  │   │   ├── selected-trip/        # Trip selection  │   │   ├── upload-photos/        # Photo uploads  │   │   └── users/                # User management  │   ├── dashboard/                # Protected dashboard pages  │   │   ├── collaboration/        # Collaboration management  │   │   └── trips/                # Trip management  │   │       └── [trip_id]/        # Individual trip pages  │   ├── destination/              # Destination discovery  │   ├── login/                    # Authentication pages  │   ├── signup/  │   └── faq/                      # FAQ page  ├── components/                   # React Components  │   ├── destination/              # Destination-specific components  │   ├── layout/                   # Layout components (navbar, footer, etc.)  │   ├── map/                      # Map components  │   ├── trip/                     # Trip management components  │   ├── tripItem/                 # Individual trip item components  │   └── ui/                       # Reusable UI components  ├── context/                      # React Context  │   └── trip-context.tsx  ├── lib/                          # Utilities and configurations  │   ├── destinations/             # Destination data and helpers  │   ├── helpers/                  # Utility functions  │   ├── supabase/                 # Supabase configuration  │   ├── types.ts                  # TypeScript type definitions  │   └── utils.ts                  # General utilities  └── middleware.ts                 # Next.js middleware   `
+## 📂 Directory Structure
 
-🛠️ Installation
-----------------
+Here’s an overview of the directory structure for **TravelTrek**:
 
-1.  git clone https://github.com/yourusername/travel-trek.gitcd travel-trek
-    
-2.  npm install# oryarn install# orpnpm install
-    
-3.  \# Supabase ConfigurationNEXT\_PUBLIC\_SUPABASE\_URL=your\_supabase\_project\_urlNEXT\_PUBLIC\_SUPABASE\_ANON\_KEY=your\_supabase\_anon\_keySUPABASE\_SERVICE\_ROLE\_KEY=your\_supabase\_service\_role\_key# Optional: Map API keys if using external map servicesNEXT\_PUBLIC\_MAP\_API\_KEY=your\_map\_api\_key
-    
-4.  \-- Enable necessary extensionscreate extension if not exists "uuid-ossp";-- Create profiles tablecreate table profiles ( id uuid default gen\_random\_uuid() primary key, user\_id uuid references auth.users not null, email text, full\_name text, avatar\_url text, created\_at timestamp with time zone default timezone('utc'::text, now()) not null, updated\_at timestamp with time zone default timezone('utc'::text, now()) not null, constraint profiles\_user\_id\_unique unique (user\_id));-- Add other necessary tables for trips, activities, etc.
-    
-5.  **Storage Setup**Create the following buckets in Supabase Storage:
-    
-    *   travelplanner (for avatars and trip photos)
-        
-6.  npm run dev# oryarn dev# orpnpm dev
-    
-7.  **Open your browser**Navigate to [http://localhost:3000](http://localhost:3000/)
-    
+```
+└── src/
+     ├── app/
+     │    ├── actions/
+     │    ├── api/
+     │    ├── dashboard/
+     │    ├── destination/
+     │    ├── error/
+     │    ├── faq/
+     │    ├── favicon.ico
+     │    ├── globals.css
+     │    ├── layout.tsx
+     │    ├── login/
+     │    ├── page.tsx
+     │    └── signup/
+     ├── components/
+     │    ├── destination/
+     │    ├── layout/
+     │    ├── map/
+     │    ├── trip/
+     │    ├── tripItem/
+     │    └── ui/
+     ├── context/
+     │    └── trip-context.tsx
+     ├── lib/
+     │    ├── destinations/
+     │    ├── helpers/
+     │    ├── supabase/
+     │    ├── types.ts
+     │    └── utils.ts
+     └── middleware.ts
+```
 
-🗄️ Database Schema
--------------------
+### Key Folders and Files:
 
-### Key Tables
+- **`src/app/actions/`**: Contains the action files responsible for CRUD operations related to trips and activities. 
+  - Files like `create-trip-action.ts` and `update-activity-order-action.ts` handle the core logic of managing trip-related data.
 
-*   **profiles**: User profile information
-    
-*   **trips**: Main trip data
-    
-*   **itineraries**: Trip itinerary details
-    
-*   **activities**: Individual trip activities
-    
-*   **destinations**: Available travel destinations
-    
-*   **trip\_photos**: Photo management
-    
-*   **collaborations**: Trip sharing and collaboration
-    
+- **`src/app/api/`**: The API routes that handle requests such as fetching trips, uploading photos, and handling user authentication. 
+  - Example: `src/app/api/collab-requests/route.tsx` handles collaboration-related requests.
 
-🔐 Authentication
------------------
+- **`src/app/dashboard/`**: Contains the layout and pages related to the user dashboard, where users can view and manage their trips and collaborations.
 
-The app uses Supabase Authentication with:
+- **`src/app/layout.tsx`**: The main layout of the app, containing shared elements like the header, footer, and navigation.
 
-*   Email/Password signup and login
-    
-*   Protected routes with middleware
-    
-*   User session management
-    
-*   Profile management with avatar uploads
-    
+- **`src/components/`**: Contains all React components used throughout the app.
+  - For example, `destination/interactive-map-section.tsx` displays an interactive map for each trip's destinations.
 
-📱 Key Features Breakdown
--------------------------
+- **`src/lib/supabase/`**: Contains files to handle interactions with Supabase, including database queries and authentication.
 
-### Trip Management
+- **`src/context/trip-context.tsx`**: The context provider to manage the global state of the trip data across your app.
 
-*   Create comprehensive trip itineraries
-    
-*   Add multiple destinations per trip
-    
-*   Organize activities by day and time
-    
-*   Drag-and-drop activity reordering
-    
-*   Trip deletion and editing
-    
+- **`src/middleware.ts`**: Custom middleware for handling authentication and other pre/post request operations.
 
-### Collaboration
+## ⚙️ Setup
 
-*   Share trips with other users
-    
-*   Real-time collaboration features
-    
-*   User search and invitation system
-    
-*   Collaborative trip editing
-    
+### Prerequisites
 
-### Photo Management
+- **Node.js** (>= 14.x)
+- **Yarn** (or npm)
+- **Supabase Account** - You'll need a Supabase project for database and authentication.
+- **Mapbox API Key** (optional, if using maps)
 
-*   Upload trip photos to cloud storage
-    
-*   Photo gallery for each trip
-    
-*   Image optimization and storage management
-    
+### 1. Clone the repository
 
-### Interactive Maps
+```bash
+git clone https://github.com/yourusername/traveltrek.git
+cd traveltrek
+```
 
-*   Visual trip route planning
-    
-*   Location selection and mapping
-    
-*   Geographic trip visualization
-    
+### 2. Install dependencies
 
-🚀 Deployment
--------------
+Using Yarn:
 
-### Vercel (Recommended)
+```bash
+yarn install
+```
 
-1.  Push your code to GitHub
-    
-2.  Connect your repository to Vercel
-    
-3.  Add environment variables in Vercel dashboard
-    
-4.  Deploy automatically
-    
+Or using npm:
 
-### Other Platforms
+```bash
+npm install
+```
 
-The app can be deployed on any platform that supports Next.js:
+### 3. Configure environment variables
 
-*   Netlify
-    
-*   Railway
-    
-*   AWS Amplify
-    
-*   DigitalOcean App Platform
-    
+Create a `.env.local` file in the root of the project and add the following:
 
-🧪 Development
---------------
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+MAPBOX_API_KEY=your-mapbox-api-key (optional)
+```
 
-### Available Scripts
+Make sure to replace the placeholders with your actual Supabase and Mapbox credentials.
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   npm run dev          # Start development server  npm run build        # Build for production  npm run start        # Start production server  npm run lint         # Run ESLint  npm run type-check   # Run TypeScript checks   `
+### 4. Run the development server
 
-### Code Structure Guidelines
+```bash
+yarn dev
+```
 
-*   Use TypeScript for all new files
-    
-*   Follow the established folder structure
-    
-*   Components should be properly typed
-    
-*   Use Server Actions for data mutations
-    
-*   API routes for external integrations
-    
+Or using npm:
 
-🤝 Contributing
----------------
+```bash
+npm run dev
+```
 
-1.  Fork the repository
-    
-2.  Create a feature branch (git checkout -b feature/amazing-feature)
-    
-3.  Commit your changes (git commit -m 'Add some amazing feature')
-    
-4.  Push to the branch (git push origin feature/amazing-feature)
-    
-5.  Open a Pull Request
-    
+Visit [http://localhost:3000](http://localhost:3000) to view your app.
 
-📄 License
-----------
+## 🔍 Explore the Features
 
-This project is licensed under the MIT License - see the [LICENSE](https://claude.ai/chat/LICENSE) file for details.
+### 1. **Trip Management**
+   - Add, update, or delete trips via the Dashboard.
+   - View trip details and activities with a clean, intuitive UI.
 
-🆘 Support
-----------
+### 2. **Collaborative Planning**
+   - Invite others to join your trip planning.
+   - Share itineraries and activity plans in real-time.
 
-For support and questions:
+### 3. **Interactive Map**
+   - Use the interactive map to visualize your travel destinations.
+   - Add and modify trip destinations easily on the map.
 
-*   Create an issue on GitHub
-    
-*   Check the FAQ page in the application
-    
-*   Review the Supabase documentation for database-related questions
-    
+### 4. **User Authentication**
+   - Sign up and log in with Supabase authentication.
+   - Secure user sessions with token-based authentication.
 
-🙏 Acknowledgments
-------------------
+## 🤝 Contributing
 
-*   [Next.js](https://nextjs.org/) for the amazing React framework
-    
-*   [Supabase](https://supabase.com/) for the backend infrastructure
-    
-*   [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
-    
-*   [shadcn/ui](https://ui.shadcn.com/) for beautiful UI components
-    
+We welcome contributions! Please feel free to fork the repository, submit issues, and create pull requests.
 
-**Happy Traveling! 🌟**
+### Steps to Contribute:
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature-branch`)
+3. Make your changes
+4. Commit your changes (`git commit -am 'Add new feature'`)
+5. Push to your fork (`git push origin feature-branch`)
+6. Submit a pull request
+
+Please ensure to follow the project's code style and conventions when submitting changes.
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👥 Authors
+
+- **Your Name** - [@subodha656@-creator](https://github.com/subodha656-creator)
+  
+Feel free to reach out for any queries, suggestions, or collaborations! 
+
+## 📞 Contact
+
+- Email: [subodha656@gmail.com](mailto:subodha656@gmail.com)
+- GitHub: [https://github.com/subodha656-creator](https://github.com/subodha656-creator)
+
+---
+
+Happy Travels! 🌍✈️
