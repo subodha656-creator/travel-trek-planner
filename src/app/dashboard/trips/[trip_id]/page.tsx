@@ -14,21 +14,13 @@ const ItineraryPageContent = async() => {
 
 
   return (
-    <div className="space-y-6 mt-8 mb-8">
-      <TripHeaderCard
-      />
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        <div className="xl:col-span-2 rounded-4xl">
-          <div className="bg-white rounded-4xl border border-[outset]/40 overflow-hidden">
-            <TripMapHeader
-
-            />
-            <MapWithToggle
-            />
-          </div>
-        </div>
-
-        <div className="space-y-6">
+    <>
+    <section className="grid grid-cols-3 my-16 border-[1px] p-2">
+      <div className="col-span-2">
+        <TripHeaderCard/>
+        <MapWithToggle/>
+      </div>
+      <div className="col-span-1">
           <TeamMembersPanel
 
           />
@@ -38,9 +30,11 @@ const ItineraryPageContent = async() => {
             <DaySchedule
             
             />
-        </div>
       </div>
-    </div>
+
+    </section>
+    
+    </>
   );
 };
 

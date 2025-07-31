@@ -23,7 +23,7 @@ const TripHeaderCard = () => {
         <AddActivityModal onClose={() => setAddLocationModal(false)} />
       )
     }
-    <div className="relative rounded-4xl p-4 sm:p-6 backdrop-blur-xl bg-white/20 border border-white/30 shadow-2xl shadow-black/10 before:absolute before:inset-0 before:rounded-4xl before:bg-gradient-to-br before:from-white/30 before:to-white/10 before:-z-10">
+    <div className="relative p-4 sm:p-6 backdrop-blur-xl bg-white/20 border border-white/30 before:absolute before:inset-0 before:rounded-4xl before:bg-gradient-to-br before:from-white/30 before:to-white/10 before:-z-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-travel-secondary drop-shadow-sm">{selectedTrip.title}</h1>

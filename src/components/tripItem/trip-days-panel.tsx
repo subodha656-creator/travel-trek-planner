@@ -3,6 +3,7 @@
 import React from 'react'
 import { Button } from '../ui/button'
 import { useTripContext } from '@/context/trip-context'
+import { ChevronDown, Clock, Plus } from 'lucide-react'
 
 
 
@@ -11,11 +12,37 @@ const TripDaysPanel = () => {
   return (
     <div className="relative rounded-2xl backdrop-blur-xl bg-white/20 border border-white/30 shadow-2xl shadow-black/10 p-4 before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-white/30 before:to-white/10 before:-z-10">
       <h4 className="font-semibold text-gray-900 mb-3 drop-shadow-sm relative z-10">Trip Days</h4>
-      <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto relative z-10">
+      <div className="grid grid-cols-1 gap-2  overflow-y-auto relative z-10">
         {Array.from({ length: selectedTrip?.days }, (_, i) => i + 1).map((day) => {
           const dayActivities = getDayActivities(day)
           return (
-            <Button
+            <>
+             <div className="space-y-2">
+                <button
+                  key={day}
+                  onClick={() => setSelectedDay(day)}
+                  className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                    selectedDay === day
+                      ? "border-primary bg-primary/5"
+                      : "border-muted hover:border-primary/50"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-medium">Day {day}</div>
+                      {/* <div className="text-sm text-muted-foreground">
+                        {day}
+                      </div> */}
+                    <p className='text-sm'>{dayActivities.length} activities</p>
+                    </div>
+                    <ChevronDown className={`h-4 w-4 transition-transform ${
+                      selectedDay === day ? "rotate-180" : ""
+                    }`} />
+                  </div>
+                </button>
+            </div>
+
+              {/* <Button
               key={day}
               onClick={() => setSelectedDay(day)}
               className={`p-3 rounded-lg text-left transition-all duration-300 relative backdrop-blur-sm border border-white/20 shadow-md hover:shadow-lg hover:scale-[1.02] ${
@@ -31,7 +58,9 @@ const TripDaysPanel = () => {
               {dayActivities.length > 0 && (
                 <div className="absolute top-2 right-2 w-2 h-2 bg-green-400 rounded-full shadow-lg shadow-green-400/50 animate-pulse" />
               )}
-            </Button>
+             </Button>  */}
+
+            </>
           )
         })}
       </div>

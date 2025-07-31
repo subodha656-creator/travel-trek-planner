@@ -20,6 +20,7 @@ import {
   Clock,
   Camera,
   ListIcon,
+  Loader2,
 } from "lucide-react";
 import { submitFullTrip } from "@/app/actions/create-full-trip-action";
 import { toast } from "sonner";
@@ -57,6 +58,7 @@ const TravelPlanner = () => {
   const router = useRouter();
   const [viewType, setViewType] = useState<"grid" | "list">("grid");
   const [profileModal, setProfileModal] = useState(false);
+  const [gettingReady, setGettingReady] = useState(true);
 
   const [allTrips, setAllTrips] = useState<Trip[]>([]);
   const [allCollaboratedTrips, setAllCollaboratedTrips] = useState<Trip[]>([]);
@@ -119,7 +121,9 @@ const TravelPlanner = () => {
   };
 
   useEffect(() => {
+    setGettingReady(true)
     loadTrips();
+    setGettingReady(false)
   }, []);
 
   useEffect(() => {
@@ -222,6 +226,20 @@ const TravelPlanner = () => {
       toast.error("Failed to delete photo!");
     }
   };
+  
+  if(gettingReady){
+    return   <div className="min-h-screen bg-gradient-to-br flex items-center justify-center">
+        <div className="text-center">
+          <Loader2/>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-2 bg-travel-primary text-white rounded-lg hover:bg-travel-primary-dark"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+  }
   return (
     <>
       {profileModal && (

@@ -8,7 +8,7 @@ export default function CTASection() {
     <>
     <section className="flex justify-center items-center">
       <div className="py-[100px]  max-w-[1408px] lg:pl-[160px] md:pl-[80px] sm:pl-[20px] bg-gradient-to-r w-full">
-        <div className="mx-auto text-center gap-12 flex md:flex-row flex-col-reverse px-12 items-center justify-between w-full">
+        <div className="mx-auto text-center gap-12 flex md:flex-row flex-col-reverse px-0 items-center justify-between w-full">
           <div className="flex justify-start items-start flex-col">
             <p className="capitalize text-[12px] mb-4">Take a tour</p>
             <h2 className="text-travel-neutral-glass md:text-3xl text-2xl lg:text-5xl font-bold text-start">Ready To Plan Our Next Adventure</h2>
