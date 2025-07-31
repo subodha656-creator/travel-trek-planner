@@ -45,6 +45,9 @@
   --color-travel-accent-light: #06B6D4;
   --color-travel-tertiary: #16A34A ;
   --color-travel-tertiary-light: #059669;
+  --color-travel-neutral-glass: #23262F;
+  --color-travel-neutral2-glass: #777E90;
+  --color-travel-neutral6-glass: #E6E8EC;
   --color-radius-sm: calc(var(--radius) - 4px);
   --color-radius-md: calc(var(--radius) - 2px);
   --color-radius-lg: var(--radius);

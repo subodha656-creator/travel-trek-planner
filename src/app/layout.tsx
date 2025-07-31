@@ -32,7 +32,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` ${poppins.variable} antialiased lg:px-8 md:px-4 sm:px-2 px-2`}
+        className={` ${poppins.variable} antialiased `}
       >
 <Navbar user={user}/>
    

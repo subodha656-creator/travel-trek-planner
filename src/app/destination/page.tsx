@@ -139,24 +139,24 @@ const TravelDestinationPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br rounded-4xl">
+    <div className="min-h-screen bg-gradient-to-br">
       <div className="relative h-screen flex items-center justify-center overflow-hidden">
         <div
-          className="absolute inset-0 rounded-4xl bg-cover bg-center bg-fixed"
+          className="absolute inset-0 bg-cover bg-center bg-fixed"
           style={{
-            backgroundImage: 'url("/assets/himalaya.jpg")',
+            backgroundImage: 'linear-gradient(90deg, rgba(0, 40, 146, 0.4) 100%), url("/assets/himalaya2.png")',
           }}
         >
-          <div className="absolute inset-0 rounded-4xl bg-black/20 bg-opacity-40"></div>
+          <div className="absolute inset-0 bg-black/20 bg-opacity-40"></div>
         </div>
 
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
           <div className="flex items-center justify-center mb-6 space-x-2">
-            <Mountain className="h-8 w-8 text-travel-primary" />
-            <h1 className="lg:text-6xl md:text-4xl sm:text-2xl text-xl font-bold bg-gradient-to-r from-travel-primary to-travel-primary-light bg-clip-text text-transparent">
+            <Mountain className="h-8 w-8 text-white"></Mountain>
+            <h1 className="lg:text-6xl md:text-4xl sm:text-2xl text-xl font-bold bg-gradient-to-r text-white bg-clip-text">
               Trek Destinations
             </h1>
-            <Compass className="h-8 w-8 text-travel-primary" />
+            <Compass className="h-8 w-8 text-white"></Compass>
           </div>
           <p className="text-xl text-white font-semibold mb-8 leading-relaxed">
             Discover breathtaking trekking destinations around Nepal shared by
