@@ -96,7 +96,7 @@ const TripCard = ({
           }`}
         >
           <div className={`relative overflow-hidden ${
-            viewType === "grid" ? "rounded-t-4xl" : "rounded-t-2xl sm:rounded-l-2xl sm:rounded-tr-none"
+            viewType === "grid" ? "rounded-t-lg" : "rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none"
           }`}>
             <SupabasePublicImage
               path={trip.cover_image_url}

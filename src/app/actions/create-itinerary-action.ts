@@ -31,7 +31,7 @@ export async function submitItinerary(prevState: any , formData: FormData){
   .select('*', { count: 'exact', head: true })
 
   if(count && count>0){
-    throw Error("You have not completed on going trips!!")
+    throw Error("You have not completed ongoing trips!!")
   }
 
   const tripData = {

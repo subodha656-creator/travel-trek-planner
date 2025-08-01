@@ -67,7 +67,7 @@ export default function PopularDestinations() {
   };
 
   return (
-    <section className="py-16 max-w-7xl mx-auto md:px-8 px-8">
+    <section className="py-16 max-w-7xl mx-auto md:px-8 px-8 mb-12">
       <div className="mb-12">
         <p className="text-sm font-medium text-travel-neutral2-glass tracking-wide uppercase mb-2">
           3 STEPS FOR THE PERFECT TRIP

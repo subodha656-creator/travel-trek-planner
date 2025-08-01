@@ -157,6 +157,7 @@ const TravelPlanner = () => {
     await fetch("/api/users/logout", {
       method: "GET",
     });
+    router.refresh()
     router.push("/login");
   };
 
@@ -249,7 +250,7 @@ const TravelPlanner = () => {
           user={user}
         />
       )}
-      <div className="min-h-screen bg-white shadow-lg mt-8 mb-8 rounded-4xl">
+      <div className="min-h-screen bg-white mt-8 mb-8 rounded-4xl">
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {currentView === "trips" && !isCreating && (
             <div className="space-y-8">
@@ -266,7 +267,7 @@ const TravelPlanner = () => {
                 <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 justify-start md:justify-end items-center w-full md:w-auto">
                   <Button
                     onClick={() => setIsCreating(true)}
-                    className="bg-gradient-to-r from-travel-primary to-travel-primary-light text-white px-6 py-3 rounded-xl font-semibold transition-all transform hover:scale-105 flex items-center gap-2 shadow-lg w-full sm:w-auto"
+                    className="bg-travel-primary hover:bg-travel-primary-light text-white px-6 py-3 rounded-lg font-semibold transition-all transform hover:scale-105 flex items-center gap-2 shadow-lg w-full sm:w-auto"
                   >
                     <Plus className="w-5 h-5" />
                     Create New Trip
@@ -274,14 +275,14 @@ const TravelPlanner = () => {
 
                   <Button
                     onClick={() => setProfileModal(true)}
-                    className="bg-gradient-to-r from-travel-primary to-travel-primary-light text-white px-6 py-3 rounded-xl font-semibold transition-all transform hover:scale-105 flex items-center gap-2 shadow-lg w-full sm:w-auto"
+                    className="bg-travel-primary hover:bg-travel-primary-light text-white px-6 py-3 rounded-lg font-semibold transition-all transform hover:scale-105 flex items-center gap-2 shadow-lg w-full sm:w-auto"
                   >
                     Profile
                   </Button>
 
                   <Button
                     onClick={async () => await signOut()}
-                    className="bg-travel-secondary text-white hover:bg-travel-secondary-light px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full sm:w-auto"
+                    className="bg-travel-secondary hover:bg-travel-secondary-light text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full sm:w-auto"
                   >
                     Logout
                   </Button>
